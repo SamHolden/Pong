@@ -65,7 +65,7 @@ function create() {
     score2_text = game.add.text(game.world.centerX + 100, 20, player2_score, style2);
     score2_text.anchor.set(0.5);
 
-    pause_text = game.add.text(game.world.centerX, game.world.centerY, "PRESS SPACE OR CLICK TO PLAY", style3);
+    pause_text = game.add.text(game.world.centerX, game.world.centerY, "PRESS OR CLICK TO PLAY", style3);
     pause_text.anchor.set(0.5);
 
     //allow for game to be paused
@@ -195,6 +195,6 @@ function click_listener()
 
 function add_pause_text()
 {
-    pause_text = game.add.text(game.world.centerX, game.world.centerY, "PRESS SPACE OR CLICK TO PLAY", style3);
+    pause_text = game.add.text(game.world.centerX, game.world.centerY, "PRESS OR CLICK TO PLAY", style3);
     pause_text.anchor.set(0.5);
 }
