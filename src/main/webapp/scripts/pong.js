@@ -126,16 +126,7 @@ function update() {
     //A bit of a hack, but enables pause functionality on space bar
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACE))
     {
-        if(game.paused)
-        {
-            game.paused = false;
-            pause_text.destroy();
-        }
-        else
-        {
-            game.paused = true;
-            addPauseText();
-        }
+        handle_pause();
     }
 
     //score checking
@@ -181,20 +172,25 @@ function reset()
 
 function click_listener()
 {
-    if(game.paused)
-    {
-        game.paused = false;
-        pause_text.destroy();
-    }
-    else
-    {
-        game.paused = true;
-        addPauseText();
-    }
+    handle_pause();
 }
 
 function add_pause_text()
 {
     pause_text = game.add.text(game.world.centerX, game.world.centerY, "PRESS OR CLICK TO PLAY", style3);
     pause_text.anchor.set(0.5);
+}
+
+function handle_pause()
+{
+    if(game.paused)
+        {
+            game.paused = false;
+            pause_text.destroy();
+        }
+        else
+        {
+            game.paused = true;
+            addPauseText();
+        }
 }
