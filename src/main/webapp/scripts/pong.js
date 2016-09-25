@@ -1,17 +1,14 @@
 var screen_width = 800;
 var screen_height = 600;
-
-//var paddle_width;
-//var paddle_height;
-
 var paddle_speed = 8;
 
 var player1_score = 0, player2_score = 0;
 
 var player1_paddle, player2_paddle, ball;
-
 var score1_text, score2_text, pause_text;
 var style1, style2, style3;
+
+var mode = 0;
 
 // instantiate game
 var game = new Phaser.Game(screen_width, screen_height, Phaser.AUTO, 'pong', { preload: preload, create: create, update:update });
@@ -68,12 +65,12 @@ function create() {
     score2_text = game.add.text(game.world.centerX + 100, 20, player2_score, style2);
     score2_text.anchor.set(0.5);
 
-    pause_text = game.add.text(game.world.centerX, game.world.centerY, "CLICK TO PLAY", style3);
+    pause_text = game.add.text(game.world.centerX, game.world.centerY, "PRESS SPACE OR CLICK TO PLAY", style3);
     pause_text.anchor.set(0.5);
 
     //allow for game to be paused
     game.paused = true;
-    game.events.onInputDown.add(click_listener, this);
+    game.input.onDown.add(click_listener, this);
 }
 
 function update() {
@@ -91,13 +88,17 @@ function update() {
     {
         player2_paddle.y += paddle_speed;
     }
-    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+    //There are some bugs with x-movement and so are disabled by default
+    if(mode == 1)
     {
-        player2_paddle.x -= paddle_speed;
-    }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
-    {
-        player2_paddle.x += paddle_speed;
+        if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+        {
+            player2_paddle.x -= paddle_speed;
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+        {
+            player2_paddle.x += paddle_speed;
+        }
     }
 
     //player 2 uses WASD, this is their input handling code
@@ -109,13 +110,32 @@ function update() {
     {
         player1_paddle.y += paddle_speed;
     }
-    if (game.input.keyboard.isDown(Phaser.Keyboard.A))
+    //There are some problems with x-movement and so is disabled by default
+    if(mode == 1)
     {
-        player1_paddle.x -= paddle_speed;
+        if (game.input.keyboard.isDown(Phaser.Keyboard.A))
+        {
+            player1_paddle.x -= paddle_speed;
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.D))
+        {
+            player1_paddle.x += paddle_speed;
+        }
     }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.D))
+
+    //A bit of a hack, but enables pause functionality on space bar
+    if (game.input.keyboard.isDown(Phaser.Keyboard.SPACE))
     {
-        player1_paddle.x += paddle_speed;
+        if(game.paused)
+        {
+            game.paused = false;
+            pause_text.destroy();
+        }
+        else
+        {
+            game.paused = true;
+            addPauseText();
+        }
     }
 
     //score checking
@@ -128,6 +148,12 @@ function update() {
     {
         player1_score += 1;
         reset();
+    }
+
+    //change mode
+    if (game.input.keyboard.isDown(Phaser.Keyboard.M))
+    {
+        mode = 1;
     }
 
 }
@@ -169,6 +195,6 @@ function click_listener()
 
 function add_pause_text()
 {
-    pause_text = game.add.text(game.world.centerX, game.world.centerY, "CLICK TO PLAY", style3);
+    pause_text = game.add.text(game.world.centerX, game.world.centerY, "PRESS SPACE OR CLICK TO PLAY", style3);
     pause_text.anchor.set(0.5);
 }
