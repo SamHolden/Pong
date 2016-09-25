@@ -73,7 +73,7 @@ function create() {
 
     //allow for game to be paused
     game.paused = true;
-    image.events.onInputDown.add(click_listener, this);
+    game.events.onInputDown.add(click_listener, this);
 }
 
 function update() {
