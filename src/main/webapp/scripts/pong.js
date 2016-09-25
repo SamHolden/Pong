@@ -57,7 +57,7 @@ function create() {
     //create score text
     style1 = { font: "32px Arial", fill: "#ff0000", align: "center" };
     style2 = { font: "32px Arial", fill: "#0000ff", align: "center" };
-    style3 = { font: "64px Arial", fill: "#ff0000", align: "center" };
+    style3 = { font: "32px Arial", fill: "#ff0000", align: "center" };
 
     score1_text = game.add.text(game.world.centerX - 100, 20, player1_score, style1);
     score1_text.anchor.set(0.5);

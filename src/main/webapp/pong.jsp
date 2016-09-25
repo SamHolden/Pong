@@ -24,6 +24,6 @@
 
 <body>
     <h1>CRAZY Pong</h1>
-    <p>It''s CRAZY cus you can move on the x axis if you press ""m""</p>
+    <p>It's CRAZY cus you can move on the x axis if you press 'm'</p>
     <p>(HINT: Red uses WASD, Blue uses arrow keys)</p>
 </body>
