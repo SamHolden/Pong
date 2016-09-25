@@ -10,8 +10,8 @@ var player1_score = 0, player2_score = 0;
 
 var player1_paddle, player2_paddle, ball;
 
-var score1_text;
-var score2_text;
+var score1_text, score2_text, pause_text;
+var style1, style2, style3;
 
 // instantiate game
 var game = new Phaser.Game(screen_width, screen_height, Phaser.AUTO, 'pong', { preload: preload, create: create, update:update });
@@ -58,8 +58,9 @@ function create() {
     ball.anchor.y=0.5;
 
     //create score text
-    var style1 = { font: "32px Arial", fill: "#ff0000", align: "center" };
-    var style2 = { font: "32px Arial", fill: "#0000ff", align: "center" };
+    style1 = { font: "32px Arial", fill: "#ff0000", align: "center" };
+    style2 = { font: "32px Arial", fill: "#0000ff", align: "center" };
+    style3 = { font: "64px Arial", fill: "#ff0000", align: "center" };
 
     score1_text = game.add.text(game.world.centerX - 100, 20, player1_score, style1);
     score1_text.anchor.set(0.5);
@@ -67,7 +68,12 @@ function create() {
     score2_text = game.add.text(game.world.centerX + 100, 20, player2_score, style2);
     score2_text.anchor.set(0.5);
 
+    pause_text = game.add.text(game.world.centerX, game.world.centerY, "CLICK TO PLAY", style3);
+    pause_text.anchor.set(0.5);
 
+    //allow for game to be paused
+    game.paused = true;
+    image.events.onInputDown.add(click_listener, this);
 }
 
 function update() {
@@ -126,7 +132,7 @@ function update() {
 
 }
 
-//function to reset positions
+//function to reset position
 function reset()
 {
     player1_paddle.x = 0
@@ -142,4 +148,27 @@ function reset()
 
     //reverse ball
     ball.body.velocity.x = -ball.body.velocity.x;
+
+    game.paused = true;
+    add_pause_text();
+}
+
+function click_listener()
+{
+    if(game.paused)
+    {
+        game.paused = false;
+        pause_text.destroy();
+    }
+    else
+    {
+        game.paused = true;
+        addPauseText();
+    }
+}
+
+function add_pause_text()
+{
+    pause_text = game.add.text(game.world.centerX, game.world.centerY, "CLICK TO PLAY", style3);
+    pause_text.anchor.set(0.5);
 }
