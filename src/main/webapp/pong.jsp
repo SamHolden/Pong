@@ -21,5 +21,7 @@
 </head>
 
 <body>
-    <h1>Hello World!</h1>
+    <h1>EXTREME Pong!</h1>
+    <p>Red uses WASD, Blue uses arrow keys</p>
+    <p>(HINT: It''s EXTREME cus you can move on the x axis)</p>
 </body>
